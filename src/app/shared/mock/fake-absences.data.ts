@@ -9,10 +9,8 @@ export const FAKE_ABSENCES: AbsenceDashboardDto[] = [
     classe: 'L3-GLRS',
     date: new Date ('2025-05-24'),
     cours: 'Algorithme',
-    status: 'Justifie',
+    status: 'En-attente',
     justificationId: 1,
-    isJustified: false,
-    piecejointeUrl: '',
   },
   {
     id: 2,
@@ -24,8 +22,6 @@ export const FAKE_ABSENCES: AbsenceDashboardDto[] = [
     cours: 'Flutter',
     status: 'Non-justifie',
     justificationId: 0,
-    isJustified: true,
-    piecejointeUrl: '',
   },
   {
     id: 3,
@@ -37,7 +33,5 @@ export const FAKE_ABSENCES: AbsenceDashboardDto[] = [
     cours: 'SGBD',
     status: 'Justifie',
     justificationId: 1,
-    isJustified: false,
-    piecejointeUrl: '',
   }
 ];

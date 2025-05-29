@@ -1,5 +1,5 @@
-export interface AbsenceFilterDto {
+export interface JustificationFilterDto {
     batiment: 'Ingenieur' | 'Management' | 'Madiba ' | 'Droit';
-    classe: string;
     date: Date;
+    status: 'Justifie' | 'Non-Justifie' | 'En-attente';
 }

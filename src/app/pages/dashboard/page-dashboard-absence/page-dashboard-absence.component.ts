@@ -19,6 +19,10 @@ export class PageDashboardAbsenceComponent implements OnInit {
     this.getAbsences();
   }
 
+    onVoir(id: number): void {
+  console.log('Voir justification pour l\'absence ID :', id);
+}
+
   getAbsences(): void {
     this.absenceService.getAllAbsences().subscribe((data: AbsenceDashboardDto[]) => {
       this.absences = data;

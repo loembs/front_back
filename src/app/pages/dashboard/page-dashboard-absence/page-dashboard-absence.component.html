@@ -1,34 +1,72 @@
-<h2>Tableau des absences</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Photo</th>  
-      <th>Nom étudiant</th>
-      <th>Matricule</th>
-      <th>Classe</th>
-      <th>Date</th>
-      <th>Cours</th>
-      <th>Status</th>
-      <th>Justification</th>
-      <th>Justifié</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let absence of absences">
-      <td>{{ absence.photo }}</td>  
-      <td>{{ absence.nom }}</td>
-      <td>{{ absence.matricule }}</td>
-      <td>{{ absence.classe }}</td>
-      <td>{{ absence.date }}</td>
-      <td>{{ absence.cours }}</td>
-      <td>{{ absence.status }}</td>
-      <td>{{ absence.isJustified ? 'Oui' : 'Non' }}</td>
-      <td>
-        <button (click)="onValidate(absence.id)" [disabled]="absence.isJustified">Valider</button>
-        <button (click)="onReject(absence.id)" [disabled]="!absence.isJustified">Rejeter</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="page-container">
+
+  <header class="header">
+    <img src="asset/logo ism.jpg" alt="ISM Logo" class="logo" />
+  </header>
+
+
+  <section class="dashboard">
+    <h1>DASHBOARD</h1>
+  </section>
+
+
+  <section class="responsable-card">
+    <img src="asset/rs.jpg" alt="Photo Responsable" class="responsable-photo" />
+    <div class="responsable-info">
+      <h2>KANE DIABY</h2>
+      <p>RESPONSABLE DE PROGRAMME</p>
+      <p>
+        Sit tempor in egestas eget risus fames massa. Morbi vitae ante t ortor lacinia amet cursus est eget nisi.
+        Est mauris nam a euismod in nibh.
+      </p>
+    </div>
+    <button class="btn-justificatif">JUSTIFICATIF</button>
+  </section>
+
+
+  <div class="search-bar">
+    <input type="text" placeholder="FILTRER PAR ..." />
+  </div>
+
+
+  <div class="table-container">
+    <h2>LISTE DES ABSENCES</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Photo</th>
+          <th>Nom</th>
+          <th>Matricule</th>
+          <th>Classe</th>
+          <th>Date</th>
+          <th>Cours</th>
+          <th>Statut</th>
+          <th>Justification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let absence of absences">
+          <td><img [src]="absence.photo" alt="photo" class="avatar" /></td>
+          <td>{{ absence.nom }}</td>
+          <td>{{ absence.matricule }}</td>
+          <td>{{ absence.classe }}</td>
+          <td>{{ absence.date | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ absence.cours }}</td>
+          <td>
+            <span [ngClass]="{
+              'status-justifie': absence.status === 'Justifie',
+              'status-non': absence.status === 'Non-justifie',
+              'status-attente': absence.status === 'En-attente'
+            }">
+              {{ absence.status.toUpperCase() }}
+            </span>
+          </td>
+          <td>
+            <button *ngIf="absence.status === 'En-attente'" class="btn-voir">Voir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

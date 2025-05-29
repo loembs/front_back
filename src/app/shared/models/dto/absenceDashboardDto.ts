@@ -6,8 +6,6 @@ export interface AbsenceDashboardDto {
     classe: string;
     date: Date;
     cours: string;
-    status: 'Justifie' | 'Non-justifie';
+    status: 'Justifie' | 'Non-justifie' | 'En-attente';
     justificationId?: number;
-    isJustified: boolean;
-    piecejointeUrl? : string;
 }

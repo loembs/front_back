@@ -11,35 +11,35 @@ export class IAbsencesService {
 
   constructor() {}
 
-  // Récupérer toutes les absences
+  
   getAllAbsences(): Observable<AbsenceDashboardDto[]> {
     return of(this.absences);
   }
 
-  // Récupérer une absence par ID
+  
   getAbsenceById(id: number): Observable<AbsenceDashboardDto | undefined> {
     const found = this.absences.find(a => a.id === id);
     return of(found);
   }
 
-  // Valider une justification
+  
   validateJustification(id: number): Observable<AbsenceDashboardDto | null> {
-    const index = this.absences.findIndex(a => a.id === id);
-    if (index !== -1) {
-      this.absences[index].isJustified = true;
-      return of(this.absences[index]);
-    }
-    return of(null);
+  const index = this.absences.findIndex(a => a.id === id);
+  if (index !== -1) {
+    this.absences[index].status = 'Justifie';
+    return of(this.absences[index]);
   }
+  return of(null);
+}
 
-  // Rejeter une justification
-  rejectJustification(id: number): Observable<AbsenceDashboardDto| null> {
-    const index = this.absences.findIndex(a => a.id === id);
-    if (index !== -1) {
-      this.absences[index].justificationId = 0;
-      this.absences[index].isJustified = false;
-      return of(this.absences[index]);
-    }
-    return of(null);
+  
+  rejectJustification(id: number): Observable<AbsenceDashboardDto | null> {
+  const index = this.absences.findIndex(a => a.id === id);
+  if (index !== -1) {
+    this.absences[index].status = 'Non-justifie';
+    this.absences[index].justificationId = 0; 
+    return of(this.absences[index]);
   }
+  return of(null);
+}
 }
