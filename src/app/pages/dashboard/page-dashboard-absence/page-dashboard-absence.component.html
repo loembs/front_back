@@ -1,1 +1,34 @@
-<p>page-dashboard-absence works!</p>
+<h2>Tableau des absences</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Photo</th>  
+      <th>Nom étudiant</th>
+      <th>Matricule</th>
+      <th>Classe</th>
+      <th>Date</th>
+      <th>Cours</th>
+      <th>Status</th>
+      <th>Justification</th>
+      <th>Justifié</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let absence of absences">
+      <td>{{ absence.photo }}</td>  
+      <td>{{ absence.nom }}</td>
+      <td>{{ absence.matricule }}</td>
+      <td>{{ absence.classe }}</td>
+      <td>{{ absence.date }}</td>
+      <td>{{ absence.cours }}</td>
+      <td>{{ absence.status }}</td>
+      <td>{{ absence.isJustified ? 'Oui' : 'Non' }}</td>
+      <td>
+        <button (click)="onValidate(absence.id)" [disabled]="absence.isJustified">Valider</button>
+        <button (click)="onReject(absence.id)" [disabled]="!absence.isJustified">Rejeter</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
