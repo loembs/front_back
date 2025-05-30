@@ -13,7 +13,7 @@ import {PageValidationJustificationComponent} from './pages/dashboard/page-valid
 
 export const routes: Routes = [
   {
-    path:"dasboard",
+    path:"dashboard",
     component: DashboardComponent,
     children:[
       {
@@ -59,3 +59,4 @@ export const routes: Routes = [
     component: PageNotFoundComponent
   }
 ];
+

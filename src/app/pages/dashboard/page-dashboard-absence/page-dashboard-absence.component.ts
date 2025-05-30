@@ -4,6 +4,8 @@ import { AbsenceDashboardDto } from '../../../shared/models/dto/absenceDashboard
 import { AbsenceFilterDto } from '../../../shared/models/dto/absenceFilterDto';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'ism-page-dashboard-absence',
@@ -22,7 +24,7 @@ export class PageDashboardAbsenceComponent implements OnInit {
     status: null as any
   };
 
-  constructor(private absenceService: IAbsencesService) {}
+  constructor(private absenceService: IAbsencesService, private router: Router) {}
 
   ngOnInit(): void {
     this.getAbsences();
@@ -70,4 +72,13 @@ export class PageDashboardAbsenceComponent implements OnInit {
   onReject(id: number): void {
     console.log('Rejet de la justification pour l’absence ID :', id);
   }
+
+  goToJustificatifs(): void {
+  this.router.navigate(['/dashboard/justifications']);
+}
+
+goToValidation(justificationId: number): void {
+  this.router.navigate(['/dashboard/validation', justificationId]);
+}
+
 }

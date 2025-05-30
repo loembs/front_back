@@ -1,4 +1,3 @@
-
 <!-- page-dashboard-absence.component.html -->
 <div class="page-container">
   <!-- Header -->
@@ -22,7 +21,9 @@
         Est mauris nam a euismod in nibh.
       </p>
     </div>
-    <button class="btn-justificatif">JUSTIFICATIF</button>
+    <button class="btn btn-primary mb-3" (click)="goToJustificatifs()">Justificatifs</button>
+
+
   </section>
 
 <!-- Barre de filtre avec actions -->
@@ -81,7 +82,14 @@
             </span>
           </td>
           <td>
-            <button *ngIf="absence.status === 'En-attente'" class="btn-voir">Voir</button>
+            <button 
+  *ngIf="absence.status === 'En-attente'" 
+  class="btn btn-info btn-sm" 
+  (click)="goToValidation(absence.id)">
+  Voir
+</button>
+
+
           </td>
         </tr>
       </tbody>
