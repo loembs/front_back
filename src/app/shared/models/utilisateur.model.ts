@@ -1,4 +1,3 @@
-//import { Role } from './role.model';
 import { Pointage } from './pointage.model';
 import { Etudiant } from './etudiant.model';
 import { Professeur } from './professeur.model';
