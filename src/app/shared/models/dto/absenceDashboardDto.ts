@@ -3,6 +3,7 @@ export interface AbsenceDashboardDto {
     photo: string;
     nom: string;
     matricule: string;
+    batiment: 'Ingenieur' | 'Management' | 'Droit' | 'Madiba';
     classe: string;
     date: Date;
     cours: string;

@@ -1,18 +1,19 @@
 
+<!-- page-dashboard-absence.component.html -->
 <div class="page-container">
-
+  <!-- Header -->
   <header class="header">
-    <img src="asset/logo ism.jpg" alt="ISM Logo" class="logo" />
+    <img src="../asset/logo ism.jpg" alt="ISM Logo" class="logo" />
   </header>
 
-
+  <!-- Dashboard section -->
   <section class="dashboard">
     <h1>DASHBOARD</h1>
   </section>
 
-
+  <!-- Profil Responsable -->
   <section class="responsable-card">
-    <img src="asset/rs.jpg" alt="Photo Responsable" class="responsable-photo" />
+    <img src="../asset/rs.jpg" alt="Photo Responsable" class="responsable-photo" />
     <div class="responsable-info">
       <h2>KANE DIABY</h2>
       <p>RESPONSABLE DE PROGRAMME</p>
@@ -24,12 +25,29 @@
     <button class="btn-justificatif">JUSTIFICATIF</button>
   </section>
 
+<!-- Barre de filtre avec actions -->
+<div class="filter-bar">
+  <select [(ngModel)]="absenceFilter.batiment">
+    <option value="">Tous les bâtiments</option>
+    <option value="Ingenieur">Ingénieur</option>
+    <option value="Management">Management</option>
+    <option value="Madiba">Madiba</option>
+    <option value="Droit">Droit</option>
+  </select>
 
-  <div class="search-bar">
-    <input type="text" placeholder="FILTRER PAR ..." />
-  </div>
+  <input type="date" [(ngModel)]="absenceFilter.date" />
 
+  <select [(ngModel)]="absenceFilter.status">
+    <option value="">Tous les statuts</option>
+    <option value="Justifie">Justifié</option>
+    <option value="Non-justifie">Non-justifié</option>
+    <option value="En-attente">En-attente</option>
+  </select>
 
+  <button (click)="applyFilter()" class="btn-filtre">Rechercher</button>
+  <button (click)="resetFilter()" class="btn-reset">Réinitialiser</button>
+</div>
+  <!-- Liste des absences -->
   <div class="table-container">
     <h2>LISTE DES ABSENCES</h2>
     <table>
