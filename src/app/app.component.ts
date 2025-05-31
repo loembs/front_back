@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HearderComponent } from './pages/dashboard/components/layout/hearder/hearder.component';
+import { HeaderComponent } from './pages/dashboard/components/layout/header/header.component';
 import { FooterComponent } from './pages/dashboard/components/layout/footer/footer.component';
 import { NavComponent } from './shared/components/nav/nav.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
