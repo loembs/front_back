@@ -1,13 +1,22 @@
   <!-- Profil Responsable -->
   <section class="responsable-card">
-    <img src="../asset/rs.jpg" alt="Photo Responsable" class="responsable-photo" />
-    <div class="responsable-info">
-      <h2>KANE DIABY</h2>
-      <p>RESPONSABLE DE PROGRAMME</p>
-      <p>
-        Sit tempor in egestas eget risus fames massa. Morbi vitae ante t ortor lacinia amet cursus est eget nisi.
-        Est mauris nam a euismod in nibh.
+    <div class="flex justify-between items-center bg-[#4d2c18] text-white p-6 rounded-xl mb-6 shadow-md">
+  <div class="flex items-center space-x-4">
+    <div class="w-20 h-20 bg-white rounded-lg">
+      <img src="" alt="Photo Responsable" class="responsable-photo" />
+    </div>
+    <div>
+      <h2 class="text-2xl font-bold">KANE DIABY</h2>
+      <p class="uppercase text-sm font-semibold text-orange-300">Responsable de programme</p>
+      <p class="text-sm text-gray-200 mt-1 max-w-md">
+        Sit tempor in egestas eget risus fames massa. Morbi vitae ante tortor lacinia amet cursus est eget nisi. Est mauris nam a euismod in nibh.
       </p>
     </div>
-    <button class="btn btn-primary mb-3" (click)="goToJustificatifs()">Justificatifs</button>
-  </section>
+  </div>
+    <button
+  class="bg-orange-400 hover:bg-orange-500 text-white font-semibold px-5 py-2 rounded-lg transition"
+  (click)="goToJustificatifs()"
+>
+  Justificatifs
+</button>
+

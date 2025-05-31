@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
   selector: 'ism-info-user-card',
   imports: [],
   templateUrl: './info-user-card.component.html',
-  styleUrl: './info-user-card.component.css'
+  styleUrls: ['./info-user-card.component.css']
 })
 export class InfoUserCardComponent {
 

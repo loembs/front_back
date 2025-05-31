@@ -5,12 +5,13 @@ import { AbsenceFilterDto } from '../../../shared/models/dto/absenceFilterDto';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'
 import { Router } from '@angular/router';
+import { InfoUserCardComponent } from "../components/info-user-card/info-user-card.component";
 
 
 @Component({
   selector: 'ism-page-dashboard-absence',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, InfoUserCardComponent],
   templateUrl: './page-dashboard-absence.component.html',
   styleUrl: './page-dashboard-absence.component.css',
 })
