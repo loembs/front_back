@@ -3,7 +3,7 @@ import { IAbsencesService } from '../../../shared/services/IAbsences.service';
 import { AbsenceDashboardDto } from '../../../shared/models/dto/absenceDashboardDto';
 import { AbsenceFilterDto } from '../../../shared/models/dto/absenceFilterDto';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms'
 import { Router } from '@angular/router';
 
 
@@ -37,7 +37,7 @@ export class PageDashboardAbsenceComponent implements OnInit {
     });
   }
 
-  applyFilter(): void {
+    applyFilter(): void {
   console.log('Filtrage en cours avec :', this.absenceFilter);
   this.absences = this.allAbsences.filter(abs =>
     (!this.absenceFilter.batiment || abs.batiment === this.absenceFilter.batiment) &&
@@ -73,10 +73,7 @@ export class PageDashboardAbsenceComponent implements OnInit {
     console.log('Rejet de la justification pour l’absence ID :', id);
   }
 
-  goToJustificatifs(): void {
-  this.router.navigate(['/dashboard/justifications']);
-}
-
+  
 goToValidation(justificationId: number): void {
   this.router.navigate(['/dashboard/validation', justificationId]);
 }

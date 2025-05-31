@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ism-hearder',
+  selector: 'ism-header',
   imports: [],
   templateUrl: './hearder.component.html',
   styleUrl: './hearder.component.css'
