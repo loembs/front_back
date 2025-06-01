@@ -4,55 +4,18 @@ import { AbsenceDashboardDto } from '../models/dto/absenceDashboardDto';
 import { FAKE_ABSENCES } from '../mock/fake-absences.data';
 import { AbsenceFilterDto } from '../models/dto/absenceFilterDto';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class IAbsencesService {
-  private absences: AbsenceDashboardDto[] = FAKE_ABSENCES;
 
-  constructor() {}
+export interface IAbsencesService {
 
-  getAllAbsences(): Observable<AbsenceDashboardDto[]> {
-    return of(this.absences);
-  }
+  getAllAbsences(): Observable<AbsenceDashboardDto[]>; 
 
-  getAbsenceById(id: number): Observable<AbsenceDashboardDto | undefined> {
-    const found = this.absences.find(a => a.id === id);
-    return of(found);
-  }
+  getAbsenceById(id: number): Observable<AbsenceDashboardDto | undefined>; 
 
-  validateJustification(id: number): Observable<AbsenceDashboardDto | null> {
-    const index = this.absences.findIndex(a => a.id === id);
-    if (index !== -1) {
-      this.absences[index].status = 'Justifie';
-      return of(this.absences[index]);
-    }
-    return of(null);
-  }
+  validateJustification(id: number): Observable<AbsenceDashboardDto | null>; 
 
-  rejectJustification(id: number): Observable<AbsenceDashboardDto | null> {
-    const index = this.absences.findIndex(a => a.id === id);
-    if (index !== -1) {
-      this.absences[index].status = 'Non-justifie';
-      this.absences[index].justificationId = 0;
-      return of(this.absences[index]);
-    }
-    return of(null);
-  }
+  rejectJustification(id: number): Observable<AbsenceDashboardDto | null>; 
 
-  filterAbsences(filter: AbsenceFilterDto): AbsenceDashboardDto[] {
-    return this.absences.filter(abs =>
-      abs.batiment === filter.batiment &&
-      this.sameDate(abs.date, filter.date) &&
-      abs.status.toLowerCase() === filter.status.toLowerCase()
-    );
-  }
+  filterAbsences(filter: AbsenceFilterDto): AbsenceDashboardDto[]; 
 
-  sameDate(date1: any, date2: any): boolean {
-  const d1 = new Date(date1);
-  const d2 = new Date(date2);
-  return d1.getFullYear() === d2.getFullYear() &&
-         d1.getMonth() === d2.getMonth() &&
-         d1.getDate() === d2.getDate();
-}
+  sameDate(date1: any, date2: any): boolean 
 }

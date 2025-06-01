@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { IAbsencesService } from '../../../shared/services/IAbsences.service';
+import { AbsencesService } from '../../../shared/services//impl/absence.service';
 import { AbsenceDashboardDto } from '../../../shared/models/dto/absenceDashboardDto';
 import { AbsenceFilterDto } from '../../../shared/models/dto/absenceFilterDto';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'
 import { Router } from '@angular/router';
 import { InfoUserCardComponent } from "../components/info-user-card/info-user-card.component";
+import { HighlightStatusDirective } from '../../../shared/directives/highlight-status.directive';
 
 
 @Component({
   selector: 'ism-page-dashboard-absence',
   standalone: true,
-  imports: [CommonModule, FormsModule, InfoUserCardComponent],
+  imports: [CommonModule, FormsModule, InfoUserCardComponent, HighlightStatusDirective],
   templateUrl: './page-dashboard-absence.component.html',
   styleUrl: './page-dashboard-absence.component.css',
 })
@@ -25,7 +26,7 @@ export class PageDashboardAbsenceComponent implements OnInit {
     status: null as any
   };
 
-  constructor(private absenceService: IAbsencesService, private router: Router) {}
+  constructor(private absenceService: AbsencesService, private router: Router) {}
 
   ngOnInit(): void {
     this.getAbsences();
@@ -78,5 +79,14 @@ export class PageDashboardAbsenceComponent implements OnInit {
 goToValidation(justificationId: number): void {
   this.router.navigate(['/dashboard/validation', justificationId]);
 }
+
+getInitials(nom: string): string {
+  if (!nom) return '';
+  return nom.split(' ')
+            .map(part => part.charAt(0).toUpperCase())
+            .slice(0, 2)
+            .join('');
+}
+
 
 }
