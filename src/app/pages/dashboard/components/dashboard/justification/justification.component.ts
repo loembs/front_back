@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Justification, JustificationStatus } from '../../../../../shared/store/app.store';
+
 @Component({
   selector: 'ism-justification',
   standalone: true,
@@ -11,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrl: './justification.component.css'
 })
 export class JustificationComponent {
-    @Input() justificationData = {
+    @Input() justificationData: Justification = {
     photo: '', 
     nom: 'Jean Dupont',
     matricule: '20231234',
@@ -19,6 +21,7 @@ export class JustificationComponent {
     date: '2025-05-30',
     cours: 'Mathématiques',
     status: 'VALIDEE',
+    motif:'Cause Voyage',
     id: 1
   };
 
@@ -32,11 +35,11 @@ export class JustificationComponent {
       .toUpperCase();
   }
 
-  getStatusText(status: string): string {
+  getStatusText(status: JustificationStatus): string {
     switch (status) {
       case 'VALIDEE': return 'Validée';
-      case 'EN_ATTENTE': return 'En attente';
       case 'REFUSEE': return 'Refusée';
+      case 'EN_ATTENTE': return 'Non validée';
       default: return 'Inconnu';
     }
   }

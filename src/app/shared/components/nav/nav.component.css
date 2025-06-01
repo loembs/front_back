@@ -1,0 +1,10 @@
+.fixed {
+  background: linear-gradient(to bottom, #4A90E2, #FA9620); /* Dégradé bleu vers orange */
+  width: 4rem; /* Environ 64px, ajustez si besoin */
+  /* Assurez-vous que le reste de votre contenu prend en compte cette largeur, par exemple avec un padding ou une marge à gauche */
+}
+
+/* Style pour les icônes pour leur donner la couleur marron foncée de l'image */
+.fixed svg {
+  fill: #4E342E; /* Marron très foncé */
+}

@@ -6,6 +6,7 @@ export interface JustificationDashboardDto {
     classe: string;
     date: Date;
     cours: string;
+    motif:string;
     status: 'En-attente' | 'Validee' | 'Refusee';
     pieceJointeUrl: string,
 }

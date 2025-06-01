@@ -1,4 +1,4 @@
-<div class="container mx-auto px-4 py-4">
+<div class="container ml-64 px-4 py-4">
   <!-- Filter Section -->
   <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mb-6 items-center">
     <h2 class="text-xl font-bold text-gray-800">LISTE DES JUSTIFICATIFS</h2>
@@ -21,16 +21,14 @@
       </div>
     </div>
   </div>
-
-  <!-- Justifications List -->
-  <div class="space-y-4">
-    <div *ngFor="let justification of justifications" class="w-full">
-      <ism-justification [justificationData]="justification"></ism-justification>
-    </div>
-
-    <!-- Empty State -->
-    <div *ngIf="!justifications || justifications.length === 0" class="text-center py-12">
-      <div class="text-gray-400 text-lg">Aucune justification trouvée</div>
+    <!-- Justifications List -->
+    <div class="space-y-4">
+      <div *ngFor="let justification of filteredJustifications" class="w-full">
+        <ism-justification [justificationData]=justification></ism-justification>
+      </div>
+      <!-- Empty State -->
+      <div *ngIf="!filteredJustifications || filteredJustifications.length === 0" class="text-center py-12">
+        <div class="text-gray-400 text-lg">Aucune justification trouvée</div>
+      </div>
     </div>
   </div>
-</div>

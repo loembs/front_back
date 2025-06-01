@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 import { Justification } from '../../models/justification.model';
 import { JustificationDashboardDto } from '../../models/dto/Request/justificationDashboardDto';
 import { JustificationFilterDto } from '../../models/dto/Request/justicationFilterDto';
@@ -24,18 +26,52 @@ export class JustificationService implements IJustification {
       if (filter.status) params = params.set('status', filter.status);
     }
 
-    return this.httpClient.get<JustificationDashboardDto[]>(`${this.baseUrl}/dashboard`, { params });
+    return this.httpClient.get<JustificationDashboardDto[]>(`${this.baseUrl}/dashboard`, { params })
+      .pipe(
+        catchError(error => {
+          console.error('Error fetching justifications:', error);
+          return throwError(() => error);
+        })
+      );
   }
   
   validateJustification(data: ValidateJustificationDto): Observable<ActionResponseDto> {
-    return this.httpClient.post<ActionResponseDto>(`${this.baseUrl}/validate`, data);
+    return this.httpClient.post<ActionResponseDto>(`${this.baseUrl}/validate`, data)
+      .pipe(
+        catchError(error => {
+          console.error('Error validating justification:', error);
+          return throwError(() => error);
+        })
+      );
   }
 
   rejectJustification(data: ValidateJustificationDto): Observable<ActionResponseDto> {
-    return this.httpClient.post<ActionResponseDto>(`${this.baseUrl}/reject`, data);
+    return this.httpClient.post<ActionResponseDto>(`${this.baseUrl}/reject`, data)
+      .pipe(
+        catchError(error => {
+          console.error('Error rejecting justification:', error);
+          return throwError(() => error);
+        })
+      );
   }
 
   getJustificationsByStudent(studentId: number): Observable<JustificationDashboardDto[]> {
-    return this.httpClient.get<JustificationDashboardDto[]>(`${this.baseUrl}/student/${studentId}`);
+    return this.httpClient.get<JustificationDashboardDto[]>(`${this.baseUrl}/student/${studentId}`)
+      .pipe(
+        catchError(error => {
+          console.error('Error fetching student justifications:', error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  getJustificationById(id: number): Observable<JustificationDashboardDto> {
+    return this.httpClient.get<JustificationDashboardDto>(`${this.baseUrl}/${id}`)
+      .pipe(
+        catchError(error => {
+          console.error('Error fetching justification by ID:', error);
+          return throwError(() => error);
+        })
+      );
   }
 }
