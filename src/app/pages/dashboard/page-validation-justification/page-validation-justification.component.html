@@ -1,1 +1,39 @@
-<p>page-validation-justification works!</p>
+ <!-- Justification Details -->
+  <div class="p-6">
+    <div class="bg-white rounded-lg shadow-sm p-6">
+      <div class="mb-4">
+        <h3 class="text-lg font-medium text-gray-800">
+          {{justification().nom}} / {{justification().matricule}}
+        </h3>
+      </div>
+
+      <div class="bg-[#FA9620] text-white rounded-lg p-6 mb-6">
+        <div class="mb-2">
+          <span class="text-sm">{{justification().date}}</span>
+        </div>
+        <div class="mb-2">
+          <span class="text-sm">{{justification().cours}}</span>
+        </div>
+        <div class="text-sm opacity-90">
+          JUSTIFICATIF :
+        </div>
+      </div>
+      <!-- Justification Text Area -->
+      <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6 min-h-[300px]">
+        <div class="text-gray-700">
+          {{justification().motif || 'Aucun texte de justification fourni.'}}
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex justify-end space-x-4">
+        <button class="bg-green-500 text-white px-6 py-2 rounded font-medium hover:bg-green-600"
+                (click)="validateJustification()">
+          VALIDER
+        </button>
+        <button class="bg-red-500 text-white px-6 py-2 rounded font-medium hover:bg-red-600"
+                (click)="refuseJustification()">
+          REFUSER
+        </button>
+      </div>
+    </div>

@@ -10,4 +10,5 @@ export interface IJustification {
   validateJustification(data: ValidateJustificationDto): Observable<ActionResponseDto>;
   rejectJustification(data: ValidateJustificationDto): Observable<ActionResponseDto>;
   getJustificationsByStudent(studentId: number): Observable<JustificationDashboardDto[]>;
+  getJustificationById(id:number):Observable<JustificationDashboardDto>;
 } 

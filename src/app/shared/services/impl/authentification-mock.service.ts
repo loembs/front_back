@@ -9,6 +9,11 @@ import {MOCK_USER} from '../../mock/user.mock';
 })
 export class AuthentificationMockService {
 
+    // Méthode pour simuler la déconnexion
+    logout(): void {
+        console.log('Déconnexion simulée');
+        // Ajoutez ici la logique de déconnexion si nécessaire (ex: réinitialiser l'état)
+    }
 }
  
 

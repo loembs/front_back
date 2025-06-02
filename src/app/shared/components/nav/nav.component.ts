@@ -11,6 +11,14 @@ import {AuthentificationMockService} from '../../services/impl/authentification-
 })
 export class NavComponent  {
     
+    constructor(private authService: AuthentificationMockService, private router: Router) { }
+
+    logout(): void {
+        // Appeler la méthode de déconnexion de votre service d'authentification
+        this.authService.logout();
+        // Rediriger l'utilisateur vers la page de connexion (adaptez la route si nécessaire)
+        this.router.navigate(['/security/login']);
+    }
 }
 
   
