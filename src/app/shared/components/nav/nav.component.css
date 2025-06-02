@@ -1,0 +1,16 @@
+.nav-fixed {
+  position: fixed; /* nécessaire car tu remplaces fixed */
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 4rem;
+  background: linear-gradient(to bottom, #4A90E2, #FA9620);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+.nav-fixed svg {
+  fill: #4E342E;
+}
