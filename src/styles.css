@@ -1,7 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("./../public/css/myStyle.css");
 @import "tailwindcss";
+
 /* .is-invalid-field {
     border-color: red !important;  Utilise !important si nécessaire pour annuler les styles Tailwind ou Bootstrap par défaut 
 
   }*/
+
+
