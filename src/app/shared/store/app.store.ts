@@ -4,14 +4,14 @@ export type JustificationStatus = 'VALIDEE' | 'REFUSEE' | 'EN_ATTENTE';
 
 export interface Justification {
   id: number;
-  photo: string;
-  nom: string;
+  images: string;
+  nomEtudiant: string;
   matricule: string;
-  classe: string;
+  nomClasse: string;
   date: string;
-  cours: string;
+  nomModule: string;
   motif:string;
-  status: JustificationStatus;
+  enumJustifiaction: JustificationStatus;
 }
 
 interface Absence {

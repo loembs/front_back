@@ -1,9 +1,9 @@
- <!-- Justification Details -->
+<!-- Justification Details -->
   <div class="p-6">
     <div class="bg-white rounded-lg shadow-sm p-6">
       <div class="mb-4">
         <h3 class="text-lg font-medium text-gray-800">
-          {{justification().nom}} / {{justification().matricule}}
+          {{justification().nomEtudiant}} / {{justification().matricule}}
         </h3>
       </div>
 
@@ -12,12 +12,36 @@
           <span class="text-sm">{{justification().date}}</span>
         </div>
         <div class="mb-2">
-          <span class="text-sm">{{justification().cours}}</span>
+          <span class="text-sm">{{justification().nomModule}}</span>
         </div>
         <div class="text-sm opacity-90">
           JUSTIFICATIF :
         </div>
       </div>
+
+      <!-- Pièce jointe -->
+      <div class="mb-6" *ngIf="justification().pieceJointeUrl">
+        <h4 class="text-lg font-medium text-gray-800 mb-2">Pièce jointe</h4>
+        <div class="flex items-center space-x-4">
+          <img *ngIf="isImage(justification().pieceJointeUrl)" 
+               [src]="justification().pieceJointeUrl" 
+               alt="Pièce jointe" 
+               class="max-w-xs rounded-lg shadow-sm cursor-pointer"
+               (click)="openPieceJointe(justification().pieceJointeUrl)"
+               (keydown.enter)="openPieceJointe(justification().pieceJointeUrl)"
+               tabindex="0">
+          <div *ngIf="!isImage(justification().pieceJointeUrl)" 
+               class="flex items-center space-x-2 p-4 bg-gray-100 rounded-lg">
+            <i class="fas fa-file-alt text-gray-600"></i>
+            <a [href]="justification().pieceJointeUrl" 
+               target="_blank" 
+               class="text-blue-600 hover:text-blue-800">
+              Ouvrir la pièce jointe
+            </a>
+          </div>
+        </div>
+      </div>
+      
       <!-- Justification Text Area -->
       <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6 min-h-[300px]">
         <div class="text-gray-700">
@@ -37,3 +61,4 @@
         </button>
       </div>
     </div>
+  </div>

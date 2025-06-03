@@ -109,4 +109,14 @@ export class PageValidationJustificationComponent {
         }
       });
     }
+
+    isImage(url: string): boolean {
+      if (!url) return false;
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
+      return imageExtensions.some(ext => url.toLowerCase().endsWith(ext));
+    }
+
+    openPieceJointe(url: string): void {
+      window.open(url, '_blank');
+    }
 }

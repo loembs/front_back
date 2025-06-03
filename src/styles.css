@@ -3,5 +3,5 @@
 @import "tailwindcss";
 .is-invalid-field {
     border-color: red !important; /* Utilise !important si nécessaire pour annuler les styles Tailwind ou Bootstrap par défaut */
-    /* Ajoutez d'autres styles si vous le souhaitez, par exemple une ombre, une couleur de texte */
+
   }

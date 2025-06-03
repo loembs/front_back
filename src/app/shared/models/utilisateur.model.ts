@@ -19,7 +19,6 @@ export enum RoleEnum {
 }
 
 export interface LoginResponse {
-  message: string;
-  success: boolean;
-  data: Utilisateur|null;
+  token: string;
+  user: Utilisateur;
 }

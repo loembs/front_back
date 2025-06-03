@@ -14,16 +14,16 @@ import { Justification, JustificationStatus } from '../../../../../shared/store/
 })
 export class JustificationComponent {
     @Input() justificationData: Justification = {
-    photo: '', 
-    nom: 'Jean Dupont',
-    matricule: '20231234',
-    classe: 'L3 Info',
-    date: '2025-05-30',
-    cours: 'Mathématiques',
-    status: 'VALIDEE',
-    motif:'Cause Voyage',
-    id: 1
-  };
+      images: '',
+      nomEtudiant: 'Jean Dupont',
+      matricule: '20231234',
+      nomClasse: 'L3 Info',
+      date: '2025-05-30',
+      nomModule: 'Mathématiques',
+      enumJustifiaction: 'VALIDEE',
+      motif: 'Cause Voyage',
+      id: 1
+    };
 
   constructor(private router: Router) {}
 

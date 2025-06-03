@@ -8,7 +8,7 @@ import { filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  standalone: true, // Ce composant peut charger d'autres composants
+  standalone: true,
   selector: 'app-root',
   imports: [RouterOutlet ,NavComponent , CommonModule],
   templateUrl: './app.component.html',
