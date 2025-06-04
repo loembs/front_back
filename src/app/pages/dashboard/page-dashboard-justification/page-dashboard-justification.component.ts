@@ -14,7 +14,7 @@ interface JustificationData {
   nomClasse: string;
   date: string;
   nomModule: string;
-  enumJustifiaction: JustificationStatus;
+  enumJustification: JustificationStatus;
   motif: string;
   pieceJointeUrl: string;
 }
@@ -82,7 +82,7 @@ export class PageDashboardJustificationComponent implements OnInit {
       nomClasse: dto.nomClasse || '',
       date: dto.date?.toString() || '',
       nomModule: dto.nomModule || '',
-      enumJustifiaction: this.mapStatus(dto.enumJustification || ''),
+      enumJustification: this.mapStatus(dto.enumJustification || ''),
       motif: dto.motif || '',
       pieceJointeUrl: dto.pieceJointeUrl || ''
     }));
@@ -94,15 +94,15 @@ export class PageDashboardJustificationComponent implements OnInit {
   private mapStatus(status: string): JustificationStatus {
     switch (status?.toUpperCase()) {
       case 'EN_ATTENTE':
-        return 'EN_ATTENTE';
+        return 'En-attente';
       case 'VALIDEE':
       case 'VALIDE':
-        return 'VALIDEE';
+        return 'Validee';
       case 'REFUSEE':
       case 'REFUSE':
-        return 'REFUSEE';
+        return 'Refusee';
       default:
-        return 'EN_ATTENTE';
+        return 'En-attente';
     }
   }
 
@@ -119,7 +119,7 @@ export class PageDashboardJustificationComponent implements OnInit {
         nomClasse: 'L3 GLRS',
         date: '2023-10-26',
         nomModule: 'Angular',
-        enumJustifiaction: 'EN_ATTENTE',
+        enumJustification: 'En-attente',
         motif: 'Cause maladie',
         pieceJointeUrl: ''
       },
@@ -131,7 +131,7 @@ export class PageDashboardJustificationComponent implements OnInit {
         nomClasse: 'L3 GLRS',
         date: '2023-10-25',
         nomModule: 'Java',
-        enumJustifiaction: 'VALIDEE',
+        enumJustification: 'Validee',
         motif: 'Rendez-vous',
         pieceJointeUrl: ''
       },
@@ -143,7 +143,7 @@ export class PageDashboardJustificationComponent implements OnInit {
         nomClasse: 'L3 GLRS',
         date: '2023-10-26',
         nomModule: 'PHP',
-        enumJustifiaction: 'VALIDEE',
+        enumJustification: 'Validee',
         motif: 'Urgence familiale',
         pieceJointeUrl: ''
       },
@@ -155,7 +155,7 @@ export class PageDashboardJustificationComponent implements OnInit {
         nomClasse: 'L3 CDSD',
         date: '2023-10-24',
         nomModule: 'Python',
-        enumJustifiaction: 'EN_ATTENTE',
+        enumJustification: 'En-attente',
         motif: 'Problème de transport',
         pieceJointeUrl: ''
       },
@@ -167,7 +167,7 @@ export class PageDashboardJustificationComponent implements OnInit {
         nomClasse: 'L3 IAGE',
         date: '2023-10-24',
         nomModule: 'Python',
-        enumJustifiaction: 'REFUSEE',
+        enumJustification: 'Refusee',
         motif: 'En retard',
         pieceJointeUrl: ''
       }
@@ -187,8 +187,9 @@ export class PageDashboardJustificationComponent implements OnInit {
     }
 
     if (this.selectedStatus) {
+      const statusToFilter = this.mapStatus(this.selectedStatus);
       filtered = filtered.filter(justification => {
-        return justification.enumJustifiaction === this.selectedStatus;
+        return justification.enumJustification === statusToFilter;
       });
     }
 

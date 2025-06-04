@@ -1,39 +1,39 @@
 <div class="min-h-screen flex items-center justify-center bg-[#FA9620]">
-  <div class="bg-white p-8 rounded shadow-md w-full max-w-sm">
+  <div class="bg-[#FA9620] p-8 rounded shadow-md w-full max-w-sm">
     <div class="flex justify-center mb-6">
-      <img src="/ism-logo.jpg" alt="ISM Logo" class="w-24 h-24">
+      <img src="/ism-logo.jpg" alt="ISM Logo" class="w-26 h-26"/>
     </div>
     <form (ngSubmit)="onLogin()">
       <div class="mb-4">
-        <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username</label>
-        <input 
-          type="text" 
-          id="username" 
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+        <label for="username" class="block text-white text-sm font-bold mb-2">Username</label>
+        <input
+          type="text"
+          id="username"
+          class="shadow appearance-none border-none border-b border-white rounded-none w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-none bg-transparent"
           [(ngModel)]="login"
           name="login"
           required
           appFormFieldValidation
         >
       </div>
-      
+
       <div class="mb-6">
-        <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-        <input 
-          type="password" 
-          id="password" 
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
+        <label for="password" class="block text-white text-sm font-bold mb-2">Password</label>
+        <input
+          type="password"
+          id="password"
+          class="shadow appearance-none border-none border-b border-white rounded-none w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-none bg-transparent"
           [(ngModel)]="password"
           name="password"
           required
           appFormFieldValidation
         >
       </div>
-      
+
       <div class="flex items-center justify-between">
-        <button 
-          type="submit" 
-          class="bg-[#FA9620] hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+        <button
+          type="submit"
+          class="bg-[#FA9620] hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full border border-white"
         >
           Sign in
         </button>

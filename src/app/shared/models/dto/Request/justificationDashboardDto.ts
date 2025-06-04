@@ -4,7 +4,7 @@ export interface JustificationDashboardDto {
     nomEtudiant: string;
     matricule: string;
     nomClasse: string;
-    date: Date;
+    date: string;
     nomModule: string;
     motif:string;
     enumJustification: 'En-attente' | 'Validee' | 'Refusee';

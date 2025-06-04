@@ -20,9 +20,10 @@ export class JustificationComponent {
       nomClasse: 'L3 Info',
       date: '2025-05-30',
       nomModule: 'Mathématiques',
-      enumJustifiaction: 'VALIDEE',
+      enumJustification: 'Validee',
       motif: 'Cause Voyage',
-      id: 1
+      id: 1,
+      pieceJointeUrl: ''
     };
 
   constructor(private router: Router) {}
@@ -37,18 +38,17 @@ export class JustificationComponent {
 
   getStatusText(status: JustificationStatus): string {
     switch (status) {
-      case 'VALIDEE': return 'Validée';
-      case 'REFUSEE': return 'Refusée';
-      case 'EN_ATTENTE': return 'Non validée';
+      case 'Validee': return 'Validée';
+      case 'Refusee': return 'Refusée';
+      case 'En-attente': return 'Non validée';
       default: return 'Inconnu';
     }
   }
 
-  viewJustification(id: number): void {
-    console.log('Voir justification avec ID:', id);
-    this.router.navigate(['/dashboard/validation', id], {
-      state: { justification: this.justificationData }
+  viewJustification(justification: Justification): void {
+    console.log('Navigation avec justification:', justification); // Pour le débogage
+    this.router.navigate(['/dashboard/validation'], {
+      state: { justification }
     });
   }
-
 }

@@ -7,7 +7,6 @@ import {PageDashboardAbsenceComponent} from './pages/dashboard/page-dashboard-ab
 import {PageDashboardJustificationComponent} from './pages/dashboard/page-dashboard-justification/page-dashboard-justification.component';
 import {PageValidationJustificationComponent} from './pages/dashboard/page-validation-justification/page-validation-justification.component';
 import { authGuard } from './shared/guards/auth.guard';
-import { justificationResolver } from './shared/resolvers/data.resolver';
 import { ConnexionPageComponent } from './pages/admin/connexion-page/connexion-page.component';
 
 export const routes: Routes = [
@@ -25,11 +24,8 @@ export const routes: Routes = [
         component: PageDashboardJustificationComponent
       },
       {
-        path: "validation/:justification_id",
-        component: PageValidationJustificationComponent,
-        resolve: {
-          justification: justificationResolver
-        }
+        path: "validation",
+        component: PageValidationJustificationComponent
       }
     ]
   },

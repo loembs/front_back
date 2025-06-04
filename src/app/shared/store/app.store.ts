@@ -1,6 +1,6 @@
 import { signalStore, withState, withMethods, patchState } from '@ngrx/signals';
 
-export type JustificationStatus = 'VALIDEE' | 'REFUSEE' | 'EN_ATTENTE';
+export type JustificationStatus = 'Validee' | 'Refusee' | 'En-attente';
 
 export interface Justification {
   id: number;
@@ -10,8 +10,9 @@ export interface Justification {
   nomClasse: string;
   date: string;
   nomModule: string;
-  motif:string;
-  enumJustifiaction: JustificationStatus;
+  motif: string;
+  enumJustification: JustificationStatus;
+  pieceJointeUrl: string;
 }
 
 interface Absence {
