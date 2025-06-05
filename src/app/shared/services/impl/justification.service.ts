@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { JustificationDashboardDto } from '../../models/dto/Request/justificationDashboardDto';
 import { JustificationFilterDto } from '../../models/dto/Request/justicationFilterDto';
@@ -38,22 +38,58 @@ export class JustificationService implements IJustification {
       );
   }
 
-  validateJustification(data: ValidateJustificationDto): Observable<ActionResponseDto> {
-    return this.httpClient.post<ActionResponseDto>(`${this.baseUrl}/validate`, data)
+  validateJustification(justificationId: string, data: { enumJustification: string }): Observable<ActionResponseDto> {
+    return this.httpClient.put<ActionResponseDto>(`${this.baseUrl}/validation/${justificationId}`, data)
       .pipe(
-        catchError(error => {
-          console.error('Erreur lors de la validation:', error);
-          return throwError(() => error);
+        catchError((error: HttpErrorResponse) => {
+          console.error('Erreur HTTP lors de la validation:', error);
+          let errorMessage = 'Une erreur inconnue est survenue lors de la validation.';
+          
+          if (!(error.error instanceof ErrorEvent)) {
+             try {
+                if (typeof error.error === 'string') {
+                  errorMessage = `Erreur du backend: ${error.error}`;
+                } else if (error.error && typeof error.error === 'object') {
+                  errorMessage = `Erreur du backend (${error.status}): ${JSON.stringify(error.error)}`;
+                } else {
+                  errorMessage = `Erreur du backend: ${error.status} ${error.statusText}`;
+                }
+             } catch (e) {
+                errorMessage = `Erreur du backend: ${error.status} ${error.statusText} (impossible de lire le corps)`;
+             }
+          } else {
+             errorMessage = `Erreur réseau/client: ${error.error.message}`;
+          }
+
+          console.error(errorMessage);
+          return throwError(() => new Error(errorMessage)); 
         })
       );
   }
 
-  rejectJustification(data: ValidateJustificationDto): Observable<ActionResponseDto> {
-    return this.httpClient.post<ActionResponseDto>(`${this.baseUrl}/reject`, data)
+  rejectJustification(justificationId: string, data: { enumJustification: string }): Observable<ActionResponseDto> {
+    return this.httpClient.put<ActionResponseDto>(`${this.baseUrl}/validation/${justificationId}`, data)
       .pipe(
-        catchError(error => {
-          console.error('Erreur lors du rejet:', error);
-          return throwError(() => error);
+        catchError((error: HttpErrorResponse) => {
+           console.error('Erreur HTTP lors du rejet:', error);
+          let errorMessage = 'Une erreur inconnue est survenue lors du rejet.';
+           if (!(error.error instanceof ErrorEvent)) {
+             try {
+                if (typeof error.error === 'string') {
+                  errorMessage = `Erreur du backend: ${error.error}`;
+                } else if (error.error && typeof error.error === 'object') {
+                  errorMessage = `Erreur du backend (${error.status}): ${JSON.stringify(error.error)}`;
+                } else {
+                  errorMessage = `Erreur du backend: ${error.status} ${error.statusText}`;
+                }
+             } catch (e) {
+                errorMessage = `Erreur du backend: ${error.status} ${error.statusText} (impossible de lire le corps)`;
+             }
+          } else {
+             errorMessage = `Erreur réseau/client: ${error.error.message}`;
+          }
+           console.error(errorMessage);
+          return throwError(() => new Error(errorMessage)); 
         })
       );
   }

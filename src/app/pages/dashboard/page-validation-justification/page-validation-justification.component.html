@@ -21,7 +21,6 @@
       <!-- Pièce jointe -->
       <div class="mb-6">
         <h4 class="text-lg font-medium text-gray-800 mb-2">Pièce jointe{{ isArray(justification()?.images) && justification()!.images.length > 1 ? 's' : '' }}</h4>
-        
         <!-- Bloc pour plusieurs pièces jointes -->
         <div *ngIf="isArray(justification()?.images) && justification()!.images.length > 0" class="flex flex-wrap items-center space-x-4">
           <div *ngFor="let imageUrl of justification()!.images" class="w-12 h-12">

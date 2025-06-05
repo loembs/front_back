@@ -48,31 +48,27 @@ export class PageValidationJustificationComponent implements OnInit {
     }
   }
 
-  validateJustification(): void {
-    this.isLoading.set(true);
-    this.error.set(null);
-
-    const j = this.justification();
-    if (!j) {
-      this.snackBar.open('Aucune justification à valider', 'Fermer', {
+  validerJustification() {
+    // Vérifier si l'ID de la justification est valide (supérieur à 0)
+    if (!this.justificationId() || this.justificationId() <= 0) {
+      console.error('Erreur: justificationId non valide pour validation.');
+      this.snackBar.open('Impossible de valider: ID justification manquant.', 'Fermer', {
         duration: 5000,
         panelClass: ['error-snackbar']
       });
       return;
     }
 
-    const validateDto: ValidateJustificationDto = {
-      justificationId: this.justificationId(),
-      nom: j.nomEtudiant || '',
-      matricule: j.matricule || '',
-      date: new Date(j.date) || new Date(),
-      cours: j.nomModule || '',
-      action: 'VALIDATED',
-      commentaire: 'Justification validée par le responsable',
-      adminId: 1
+    console.log('Valider Justification - ID:', this.justificationId());
+
+    // Construction du DTO simple pour le service
+    const dto = {
+      enumJustification: 'Validee' // Valeur String attendue par le backend
     };
 
-    this.justificationService.validateJustification(validateDto).subscribe({
+    console.log('Valider Justification - DTO envoyé:', dto);
+
+    this.justificationService.validateJustification(this.justificationId().toString(), dto).subscribe({
       next: () => {
         this.isLoading.set(false);
         this.snackBar.open('Justification validée avec succès', 'Fermer', {
@@ -92,31 +88,27 @@ export class PageValidationJustificationComponent implements OnInit {
     });
   }
 
-  refuseJustification(): void {
-    this.isLoading.set(true);
-    this.error.set(null);
+  refuserJustification() {
+    // Vérifier si l'ID de la justification est valide (supérieur à 0)
+    if (!this.justificationId() || this.justificationId() <= 0) {
+       console.error('Erreur: justificationId non valide pour refus.');
+       this.snackBar.open('Impossible de refuser: ID justification manquant.', 'Fermer', {
+         duration: 5000,
+         panelClass: ['error-snackbar']
+       });
+       return;
+     }
 
-    const j = this.justification();
-    if (!j) {
-      this.snackBar.open('Aucune justification à refuser', 'Fermer', {
-        duration: 5000,
-        panelClass: ['error-snackbar']
-      });
-      return;
-    }
+    console.log('Refuser Justification - ID:', this.justificationId());
 
-    const validateDto: ValidateJustificationDto = {
-      justificationId: this.justificationId(),
-      nom: j.nomEtudiant || '',
-      matricule: j.matricule || '',
-      date: new Date(j.date) || new Date(),
-      cours: j.nomModule || '',
-      action: 'REFUSED',
-      commentaire: 'Justification refusée par le responsable',
-      adminId: 1
+    // Construction du DTO simple pour le service
+    const dto = {
+      enumJustification: 'Refusee' // Valeur String attendue par le backend
     };
 
-    this.justificationService.validateJustification(validateDto).subscribe({
+    console.log('Refuser Justification - DTO envoyé:', dto);
+
+    this.justificationService.rejectJustification(this.justificationId().toString(), dto).subscribe({
       next: () => {
         this.isLoading.set(false);
         this.snackBar.open('Justification refusée avec succès', 'Fermer', {
@@ -136,63 +128,9 @@ export class PageValidationJustificationComponent implements OnInit {
     });
   }
 
-  validerJustification() {
-    if (!this.justificationId()) return;
-    
-    const j = this.justification();
-    if (!j) return;
-
-    const dto: ValidateJustificationDto = {
-      justificationId: this.justificationId(),
-      nom: j.nomEtudiant || '',
-      matricule: j.matricule || '',
-      date: new Date(j.date) || new Date(),
-      cours: j.nomModule || '',
-      action: 'VALIDATED',
-      commentaire: 'Justification validée par le responsable',
-      adminId: 1
-    };
-
-    this.justificationService.validateJustification(dto).subscribe({
-      next: () => {
-        this.router.navigate(['/dashboard/justifications']);
-      },
-      error: (error: Error) => {
-        console.error('Erreur lors de la validation:', error);
-      }
-    });
-  }
-
-  refuserJustification() {
-    if (!this.justificationId()) return;
-    
-    const j = this.justification();
-    if (!j) return;
-
-    const dto: ValidateJustificationDto = {
-      justificationId: this.justificationId(),
-      nom: j.nomEtudiant || '',
-      matricule: j.matricule || '',
-      date: new Date(j.date) || new Date(),
-      cours: j.nomModule || '',
-      action: 'REFUSED',
-      commentaire: 'Justification refusée par le responsable',
-      adminId: 1
-    };
-
-    this.justificationService.validateJustification(dto).subscribe({
-      next: () => {
-        this.router.navigate(['/dashboard/justifications']);
-      },
-      error: (error: Error) => {
-        console.error('Erreur lors du refus:', error);
-      }
-    });
-  }
-
   isImage(url: string | undefined): boolean {
     if (!url) return false;
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp','.pdf','.docx'];
     return imageExtensions.some(ext => url.toLowerCase().endsWith(ext));
   }
 
