@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
-import { Justification } from '../../models/justification.model';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
 import { JustificationDashboardDto } from '../../models/dto/Request/justificationDashboardDto';
 import { JustificationFilterDto } from '../../models/dto/Request/justicationFilterDto';
 import { ValidateJustificationDto } from '../../models/dto/Request/validateJustificationDto';
@@ -14,43 +13,83 @@ import { IJustification } from '../IJustification.service';
   providedIn: 'root'
 })
 export class JustificationService implements IJustification {
-  private baseUrl = 'http://localhost:8080/api/justifications';
+  private baseUrl = 'https://backgroupe6.onrender.com/api/justification';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
+
+  
+
+  
 
   getJustifications(filter?: JustificationFilterDto): Observable<JustificationDashboardDto[]> {
     let params = new HttpParams();
-    
+
     if (filter) {
       if (filter.date) params = params.set('date', filter.date.toISOString());
       if (filter.status) params = params.set('status', filter.status);
     }
 
-    return this.httpClient.get<JustificationDashboardDto[]>(`${this.baseUrl}/dashboard`, { params })
+    return this.httpClient.get<JustificationDashboardDto[]>(`${this.baseUrl}/listes`, { params })
       .pipe(
         catchError(error => {
-          console.error('Error fetching justifications:', error);
-          return throwError(() => error);
-        })
-      );
-  }
-  
-  validateJustification(data: ValidateJustificationDto): Observable<ActionResponseDto> {
-    return this.httpClient.post<ActionResponseDto>(`${this.baseUrl}/validate`, data)
-      .pipe(
-        catchError(error => {
-          console.error('Error validating justification:', error);
+          console.error('Erreur lors de la récupération des justifications:', error);
           return throwError(() => error);
         })
       );
   }
 
-  rejectJustification(data: ValidateJustificationDto): Observable<ActionResponseDto> {
-    return this.httpClient.post<ActionResponseDto>(`${this.baseUrl}/reject`, data)
+  validateJustification(justificationId: string, data: { enumJustification: string }): Observable<ActionResponseDto> {
+    return this.httpClient.put<ActionResponseDto>(`${this.baseUrl}/validation/${justificationId}`, data)
       .pipe(
-        catchError(error => {
-          console.error('Error rejecting justification:', error);
-          return throwError(() => error);
+        catchError((error: HttpErrorResponse) => {
+          console.error('Erreur HTTP lors de la validation:', error);
+          let errorMessage = 'Une erreur inconnue est survenue lors de la validation.';
+          
+          if (!(error.error instanceof ErrorEvent)) {
+             try {
+                if (typeof error.error === 'string') {
+                  errorMessage = `Erreur du backend: ${error.error}`;
+                } else if (error.error && typeof error.error === 'object') {
+                  errorMessage = `Erreur du backend (${error.status}): ${JSON.stringify(error.error)}`;
+                } else {
+                  errorMessage = `Erreur du backend: ${error.status} ${error.statusText}`;
+                }
+             } catch (e) {
+                errorMessage = `Erreur du backend: ${error.status} ${error.statusText} (impossible de lire le corps)`;
+             }
+          } else {
+             errorMessage = `Erreur réseau/client: ${error.error.message}`;
+          }
+
+          console.error(errorMessage);
+          return throwError(() => new Error(errorMessage)); 
+        })
+      );
+  }
+
+  rejectJustification(justificationId: string, data: { enumJustification: string }): Observable<ActionResponseDto> {
+    return this.httpClient.put<ActionResponseDto>(`${this.baseUrl}/validation/${justificationId}`, data)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+           console.error('Erreur HTTP lors du rejet:', error);
+          let errorMessage = 'Une erreur inconnue est survenue lors du rejet.';
+           if (!(error.error instanceof ErrorEvent)) {
+             try {
+                if (typeof error.error === 'string') {
+                  errorMessage = `Erreur du backend: ${error.error}`;
+                } else if (error.error && typeof error.error === 'object') {
+                  errorMessage = `Erreur du backend (${error.status}): ${JSON.stringify(error.error)}`;
+                } else {
+                  errorMessage = `Erreur du backend: ${error.status} ${error.statusText}`;
+                }
+             } catch (e) {
+                errorMessage = `Erreur du backend: ${error.status} ${error.statusText} (impossible de lire le corps)`;
+             }
+          } else {
+             errorMessage = `Erreur réseau/client: ${error.error.message}`;
+          }
+           console.error(errorMessage);
+          return throwError(() => new Error(errorMessage)); 
         })
       );
   }
@@ -59,7 +98,7 @@ export class JustificationService implements IJustification {
     return this.httpClient.get<JustificationDashboardDto[]>(`${this.baseUrl}/student/${studentId}`)
       .pipe(
         catchError(error => {
-          console.error('Error fetching student justifications:', error);
+          console.error('Erreur lors de la récupération des justifications de l\'étudiant:', error);
           return throwError(() => error);
         })
       );
@@ -69,7 +108,7 @@ export class JustificationService implements IJustification {
     return this.httpClient.get<JustificationDashboardDto>(`${this.baseUrl}/${id}`)
       .pipe(
         catchError(error => {
-          console.error('Error fetching justification by ID:', error);
+          console.error('Erreur lors de la récupération de la justification par ID:', error);
           return throwError(() => error);
         })
       );

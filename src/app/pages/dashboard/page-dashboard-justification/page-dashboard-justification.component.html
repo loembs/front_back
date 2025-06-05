@@ -1,4 +1,21 @@
 <div class="container ml-64 px-4 py-4">
+  <div class="bg-[#442A1B] text-white p-6 rounded-lg w-full">
+        <div class="flex items-center space-x-4">
+          <div class="w-16 h-16 bg-gray-300 rounded flex-shrink-0 overflow-hidden">
+          </div>
+          <div class="flex-1">
+            <h2 class="text-xl font-bold">{{ userInfo?.login || 'KANE DIABY' }}</h2>
+            <p class="text-sm opacity-90">{{ userInfo?.role || 'RESPONSABLE DE PROGRAMME' }}</p>
+            <p class="text-xs mt-2 opacity-80">
+              {{  'Sit tempor in egestas eget risus fames massa. Morbi vitae ante tortor lacinia amet cursus est eget nisl. Est mauris nam a euismod in nibh.' }}
+            </p>
+          </div>
+            <button
+  class="bg-orange-400 hover:bg-orange-500 text-white font-semibold px-5 py-2 rounded-lg transition"
+  (click)="goToAbsences()">Absences</button>
+          
+        </div>
+      </div>
   <!-- Filter Section -->
   <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mb-6 items-center">
     <h2 class="text-xl font-bold text-gray-800">LISTE DES JUSTIFICATIFS</h2>

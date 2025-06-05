@@ -1,12 +1,12 @@
 export interface AbsenceDashboardDto {
     id: number;
-    photo: string;
-    nom: string;
+    images: string;
+    nomEtudiant: string;
     matricule: string;
-    classe: string;
+    batiment: 'Ingenieur' | 'Management' | 'Droit' | 'Madiba';
+    nomClasse: string;
     date: Date;
-    cours: string;
-    status: 'Justifie' | 'Non-justifie';
+    nomModule: string;
+    etatAbsence: 'JUSTIFIE' | 'NON-JUSTIFIE';
     justificationId?: number;
-    isJustified: boolean;
 }

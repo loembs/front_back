@@ -1,11 +1,12 @@
 export interface JustificationDashboardDto {
     id: number;
-    photo: string;
-    nom: string;
+    images: string;
+    nomEtudiant: string;
     matricule: string;
-    classe: string;
-    date: Date;
-    cours: string;
-    status: 'En-attente' | 'Validee' | 'Refusee';
+    nomClasse: string;
+    date: string;
+    nomModule: string;
+    motif:string;
+    enumJustification: 'En-attente' | 'Validee' | 'Refusee';
     pieceJointeUrl: string,
 }

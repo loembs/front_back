@@ -14,16 +14,17 @@ import { Justification, JustificationStatus } from '../../../../../shared/store/
 })
 export class JustificationComponent {
     @Input() justificationData: Justification = {
-    photo: '', 
-    nom: 'Jean Dupont',
-    matricule: '20231234',
-    classe: 'L3 Info',
-    date: '2025-05-30',
-    cours: 'Mathématiques',
-    status: 'VALIDEE',
-    motif:'Cause Voyage',
-    id: 1
-  };
+      images: '',
+      nomEtudiant: 'Jean Dupont',
+      matricule: '20231234',
+      nomClasse: 'L3 Info',
+      date: '2025-05-30',
+      nomModule: 'Mathématiques',
+      enumJustification: 'Validee',
+      motif: 'Cause Voyage',
+      id: 1,
+      pieceJointeUrl: ''
+    };
 
   constructor(private router: Router) {}
 
@@ -37,18 +38,17 @@ export class JustificationComponent {
 
   getStatusText(status: JustificationStatus): string {
     switch (status) {
-      case 'VALIDEE': return 'Validée';
-      case 'REFUSEE': return 'Refusée';
-      case 'EN_ATTENTE': return 'Non validée';
+      case 'Validee': return 'Validée';
+      case 'Refusee': return 'Refusée';
+      case 'En-attente': return 'Non validée';
       default: return 'Inconnu';
     }
   }
 
-  viewJustification(id: number): void {
-    console.log('Voir justification avec ID:', id);
-    this.router.navigate(['/dashboard/validation', id], {
-      state: { justification: this.justificationData }
+  viewJustification(justification: Justification): void {
+    console.log('Navigation avec justification:', justification); // Pour le débogage
+    this.router.navigate(['/dashboard/validation'], {
+      state: { justification }
     });
   }
-
 }

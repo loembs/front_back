@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, RouterModule} from '@angular/router';
-import {AuthentificationMockService} from '../../services/impl/authentification-mock.service';
+import {AuthentificationService} from '../../services/impl/authentification-mock.service';
 
 
 @Component({
@@ -11,7 +11,7 @@ import {AuthentificationMockService} from '../../services/impl/authentification-
 })
 export class NavComponent  {
     
-    constructor(private authService: AuthentificationMockService, private router: Router) { }
+    constructor(private authService: AuthentificationService, private router: Router) { }
 
     logout(): void {
         // Appeler la méthode de déconnexion de votre service d'authentification

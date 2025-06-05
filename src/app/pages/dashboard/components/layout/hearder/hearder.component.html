@@ -12,7 +12,7 @@
         DASHBOARD
       </div>
   
-      <!-- Bloc user info -->
+      <!-- Bloc user info 
       <div class="bg-[#442A1B] text-white p-6 rounded-lg w-full">
         <div class="flex items-center space-x-4">
           <div class="w-16 h-16 bg-gray-300 rounded flex-shrink-0 overflow-hidden">
@@ -25,13 +25,13 @@
               {{ userInfo?.description || 'Sit tempor in egestas eget risus fames massa. Morbi vitae ante tortor lacinia amet cursus est eget nisl. Est mauris nam a euismod in nibh.' }}
             </p>
           </div>
-          <div *ngIf="showActions" class="flex-shrink-0">
-            <button class="bg-[#FA9620] px-4 py-2 rounded text-sm font-medium hover:bg-orange-600">
-              JUSTIFICATIF
-            </button>
-          </div>
+            <button
+  class="bg-orange-400 hover:bg-orange-500 text-white font-semibold px-5 py-2 rounded-lg transition"
+  (click)="goToJustificatifs()">Justificatifs</button>
+          
         </div>
       </div>
+      -->
   
     </div>
   </header>

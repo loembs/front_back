@@ -1,4 +1,3 @@
-//import { Role } from './role.model';
 import { Pointage } from './pointage.model';
 import { Etudiant } from './etudiant.model';
 import { Professeur } from './professeur.model';
@@ -20,7 +19,6 @@ export enum RoleEnum {
 }
 
 export interface LoginResponse {
-  message: string;
-  success: boolean;
-  data: Utilisateur|null;
+  token: string;
+  user: Utilisateur;
 }

@@ -1,35 +1,59 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { AbsenceDashboardDto } from '../../models/dto/Request/absenceDashboardDto';
 import { AbsenceFilterDto } from '../../models/dto/Request/absenceFilterDto';
+import { IAbsencesService } from '../IAbsences.service';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 
-import { IAbsences } from '../IAbsences.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AbsencesService implements IAbsences {
-  private baseUrl = 'http://localhost:8080/api/absences';
+export class AbsenceService implements IAbsencesService {
+  private baseUrl = 'https://backgroupe6-3onn.onrender.com/api/absence/listes'; 
 
   constructor(private httpClient: HttpClient) { }
 
-  getAbsences(filter?: AbsenceFilterDto): Observable<AbsenceDashboardDto[]> {
+  getAllAbsences(): Observable<AbsenceDashboardDto[]> {
+    return this.httpClient.get<AbsenceDashboardDto[]>(`${this.baseUrl}`)
+      .pipe(
+        catchError(error => {
+          console.error('Erreur lors du chargement des absences', error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  getAbsenceById(id: number): Observable<AbsenceDashboardDto | undefined> {
+    return this.httpClient.get<AbsenceDashboardDto>(`${this.baseUrl}/${id}`)
+      .pipe(
+        catchError(error => {
+          console.error('Erreur lors du chargement de l’absence', error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  filterAbsences(filter: AbsenceFilterDto): Observable<AbsenceDashboardDto[]> {
     let params = new HttpParams();
-    
-    if (filter) {
-      if (filter.date) params = params.set('date', filter.date.toISOString());
-      if (filter.batiment) params = params.set('batiment', filter.batiment);
-      if (filter.classe) params = params.set('classe', filter.classe);
-    }
+    if (filter.batiment) params = params.set('batiment', filter.batiment);
+    if (filter.etatAbsence) params = params.set('etatAbsence', filter.etatAbsence);
+    if (filter.date) params = params.set('date', filter.date.toISOString().split('T')[0]);
 
-    return this.httpClient.get<AbsenceDashboardDto[]>(`${this.baseUrl}/dashboard`, { params });
+    return this.httpClient.get<AbsenceDashboardDto[]>(this.baseUrl, { params }).pipe(
+      catchError(error => {
+        console.error('Erreur filtrage', error);
+        return throwError(() => error);
+      })
+    );
   }
 
-  getAbsencesByStudent(studentId: number): Observable<AbsenceDashboardDto[]> {
-    return this.httpClient.get<AbsenceDashboardDto[]>(`${this.baseUrl}/student/${studentId}`);
+  validateJustification(id: number): Observable<AbsenceDashboardDto> {
+    return this.httpClient.patch<AbsenceDashboardDto>(`${this.baseUrl}/${id}`, { etatAbsence: 'justifie' });
   }
 
-  getAbsencesByCourse(courseId: number): Observable<AbsenceDashboardDto[]> {
-    return this.httpClient.get<AbsenceDashboardDto[]>(`${this.baseUrl}/course/${courseId}`);
+  rejectJustification(id: number): Observable<AbsenceDashboardDto> {
+    return this.httpClient.patch<AbsenceDashboardDto>(`${this.baseUrl}/${id}`, { etatAbsence: 'non_justifie' });
   }
 }
+
