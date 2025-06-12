@@ -1,0 +1,7 @@
+.relative:hover .hidden {
+  display: block;
+}
+
+.relative:hover button {
+  background-color: #2563eb;
+}

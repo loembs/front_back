@@ -1,10 +1,10 @@
 import { signalStore, withState, withMethods, patchState } from '@ngrx/signals';
 
-export type JustificationStatus = 'Validee' | 'Refusee' | 'En-attente';
+export type JustificationStatus = 'Valider' | 'Rejeter' | 'EnCours';
 
 export interface Justification {
-  id: number;
-  images: string;
+  id: string;
+  image: string;
   nomEtudiant: string;
   matricule: string;
   nomClasse: string;
@@ -12,7 +12,7 @@ export interface Justification {
   nomModule: string;
   motif: string;
   enumJustification: JustificationStatus;
-  pieceJointeUrl: string;
+  pieceJointe: string[];
 }
 
 interface Absence {
@@ -54,7 +54,7 @@ export const AppStore = signalStore(
     setCurrentUser(user: any) {
       patchState(store, { currentUser: user });
     },
-    updateJustificationStatus(justificationId: number, status: JustificationStatus) {
+    updateJustificationStatus(justificationId: string, status: JustificationStatus) {
       const updatedJustifications = store.justifications().map(justification => 
         justification.id === justificationId 
           ? { ...justification, status } 

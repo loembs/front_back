@@ -7,8 +7,8 @@ import { ActionResponseDto} from '../models/dto/Response/actionResponseDto';
 
 export interface IJustification {
   getJustifications(filter?: JustificationFilterDto): Observable<JustificationDashboardDto[]>;
-  validateJustification(justificationId: string, data: { enumJustification: string }): Observable<ActionResponseDto>;
-  rejectJustification(justificationId: string, data: { enumJustification: string }): Observable<ActionResponseDto>;
+  validateJustification(justificationId: string, data: ValidateJustificationDto): Observable<ActionResponseDto>;
+  rejectJustification(justificationId: string, data: ValidateJustificationDto): Observable<ActionResponseDto>;
   getJustificationsByStudent(studentId: number): Observable<JustificationDashboardDto[]>;
   getJustificationById(id:number):Observable<JustificationDashboardDto>;
 } 
