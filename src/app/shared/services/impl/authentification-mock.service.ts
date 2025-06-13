@@ -12,8 +12,8 @@ export class AuthentificationService implements IAuthentification {
   private readonly API_URL = 'https://backgroupe6.onrender.com/api/utilisateur';
   
   // Signal pour gérer l'état de connexion
-  private isLoggedInSignal = signal<boolean>(false);
-  private currentUser = signal<Utilisateur | null>(null);
+   readonly isLoggedInSignal = signal<boolean>(false);
+   readonly currentUser = signal<Utilisateur | null>(null);
 
   constructor(private http: HttpClient) {
     // Vérifier si l'utilisateur est déjà connecté au démarrage
@@ -34,6 +34,7 @@ export class AuthentificationService implements IAuthentification {
     return this.http.post<LoginResponse>(`${this.API_URL}/login`, loginData, { headers })
       .pipe(
         map((response: LoginResponse) => {
+          console.log('Réponse Login reçue :', response);
           if (response?.token) {
             this.saveAuthData(response);
             this.isLoggedInSignal.set(true);

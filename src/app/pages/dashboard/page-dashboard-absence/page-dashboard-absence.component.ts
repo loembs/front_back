@@ -1,4 +1,4 @@
-import { Component, effect, inject, Input, OnInit } from '@angular/core';
+import { Component, effect, inject, Input, OnInit, computed } from '@angular/core';
 import { AbsenceService } from '../../../shared/services/impl/absence.service';
 import { AbsenceDashboardDto } from '../../../shared/models/dto/Request/absenceDashboardDto';
 import { AbsenceFilterDto } from '../../../shared/models/dto/Request/absenceFilterDto';
@@ -23,7 +23,9 @@ export class PageDashboardAbsenceComponent implements OnInit {
   absences: AbsenceDashboardDto[] = [];
   allAbsences: AbsenceDashboardDto[] = [];
   private authService = inject(AuthentificationService);
-  userInfo: Utilisateur | null = null;
+  userInfo = this.authService.currentUser;
+  isConnected = this.authService.isLoggedInSignal;
+
   @Input() absenceData:AbsenceDashboardDto ={
      id: 1,
     image: '',
@@ -34,6 +36,8 @@ export class PageDashboardAbsenceComponent implements OnInit {
     nomModule: '',
     etatAbsence: 'NON-JUSTIFIE',
     justificationId: 86548,
+    heureDb: '',
+    heureFin: '',
 
   }
 
@@ -49,6 +53,7 @@ export class PageDashboardAbsenceComponent implements OnInit {
   this.absenceService.getAllAbsences().subscribe({
     next: (response: any) => {
       console.log('Réponse reçue :', response);
+      console.log('Info user:', this.userInfo());
       this.absences = Array.isArray(response) ? response : response.content || [];
       this.allAbsences = this.absences;
     },

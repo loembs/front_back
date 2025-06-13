@@ -36,7 +36,6 @@ export class AbsenceService implements IAbsencesService {
 
   filterAbsences(filter: AbsenceFilterDto): Observable<AbsenceDashboardDto[]> {
     let params = new HttpParams();
-    if (filter.batiment) params = params.set('batiment', filter.batiment);
     if (filter.etatAbsence) params = params.set('etatAbsence', filter.etatAbsence);
     if (filter.date) params = params.set('date', filter.date.toISOString().split('T')[0]);
 

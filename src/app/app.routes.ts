@@ -8,6 +8,7 @@ import {PageDashboardJustificationComponent} from './pages/dashboard/page-dashbo
 import {PageValidationJustificationComponent} from './pages/dashboard/page-validation-justification/page-validation-justification.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { ConnexionPageComponent } from './pages/admin/connexion-page/connexion-page.component';
+import { PageDashboardDetailAbsenceComponent } from './pages/dashboard/page-dashboard-detail-absence/page-dashboard-detail-absence.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
       {
         path: "validation",
         component: PageValidationJustificationComponent
+      },
+      {
+        path: 'detail-absence',
+        component: PageDashboardDetailAbsenceComponent
       }
     ]
   },
