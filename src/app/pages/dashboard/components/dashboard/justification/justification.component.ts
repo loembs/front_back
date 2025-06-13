@@ -14,16 +14,16 @@ import { Justification, JustificationStatus } from '../../../../../shared/store/
 })
 export class JustificationComponent {
     @Input() justificationData: Justification = {
-      images: '',
+      image: '',
       nomEtudiant: 'Jean Dupont',
       matricule: '20231234',
       nomClasse: 'L3 Info',
       date: '2025-05-30',
       nomModule: 'Mathématiques',
-      enumJustification: 'Validee',
+      enumJustification: 'Valider',
       motif: 'Cause Voyage',
-      id: 1,
-      pieceJointeUrl: ''
+      id: '',
+      pieceJointe: []
     };
 
   constructor(private router: Router) {}
@@ -38,17 +38,24 @@ export class JustificationComponent {
 
   getStatusText(status: JustificationStatus): string {
     switch (status) {
-      case 'Validee': return 'Validée';
-      case 'Refusee': return 'Refusée';
-      case 'En-attente': return 'Non validée';
+      case 'Valider': return 'Validée';
+      case 'Rejeter': return 'Refusée';
+      case 'EnCours': return 'En cours';
       default: return 'Inconnu';
     }
   }
 
   viewJustification(justification: Justification): void {
-    console.log('Navigation avec justification:', justification); // Pour le débogage
+    console.log('Navigation avec justification:', justification);
     this.router.navigate(['/dashboard/validation'], {
       state: { justification }
     });
+  }
+
+  getImageArray(): string[] {
+    if (Array.isArray(this.justificationData.image)) {
+      return this.justificationData.image;
+    }
+    return [];
   }
 }

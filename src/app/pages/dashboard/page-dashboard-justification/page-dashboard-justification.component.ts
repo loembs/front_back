@@ -5,12 +5,12 @@ import { JustificationService } from '../../../shared/services/impl/justificatio
 import { FormsModule } from '@angular/forms';
 import { JustificationStatus } from '../../../shared/store/app.store';
 import { JustificationDashboardDto } from '../../../shared/models/dto/Request/justificationDashboardDto';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Utilisateur } from '../../../shared/models/utilisateur.model';
 
 interface JustificationData {
-  id: number;
-  images: string;
+  id: string;
+  image: string;
   nomEtudiant: string;
   matricule: string;
   nomClasse: string;
@@ -18,7 +18,7 @@ interface JustificationData {
   nomModule: string;
   enumJustification: JustificationStatus;
   motif: string;
-  pieceJointeUrl: string;
+  pieceJointe: string[];
 }
 
 @Component({
@@ -41,30 +41,44 @@ export class PageDashboardJustificationComponent implements OnInit {
   error: any| null = null;
   userInfo: Utilisateur | null = null;
 
-  constructor(private justificationService: JustificationService, private router: Router) {}
+  constructor(private justificationService: JustificationService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.loadJustifications();
+    // S'abonner aux événements de navigation
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.loadJustifications();
+      }
+    });
+    // S'abonner aux changements de paramètres de requête
+    this.route.queryParams.subscribe(params => {
+      if (params['refresh']) {
+        console.log('Rafraîchissement des justifications...');
+        this.loadJustifications();
+      }
+    });
   }
 
   loadJustifications(): void {
+    console.log('Chargement des justifications...');
     this.loading = true;
-    this.error = null;
-
     this.justificationService.getJustifications().subscribe({
       next: (response: any) => {
-        console.log('Réponse brute du backend:', response); 
-        const justifications = Array.isArray(response.content) ? response.content : [];
-        this.allJustifications = this.mapDtoToJustificationData(response.content);
-        this.applyFilter();
+        console.log('Réponse brute du backend:', response);
+        // Vérifier si la réponse contient un tableau de justifications
+        const justifications = Array.isArray(response) ? response : 
+                             Array.isArray(response.content) ? response.content : [];
+        
+        console.log('Justifications extraites:', justifications);
+        this.allJustifications = this.mapDtoToJustificationData(justifications);
+        this.filteredJustifications = this.allJustifications;
         this.loading = false;
       },
       error: (error) => {
         console.error('Erreur lors du chargement des justifications:', error);
-        this.error = 'Erreur lors du chargement des données';
+        this.error = error;
         this.loading = false;
-        // En cas d'erreur, utiliser les données de fallback
-        this.loadFallbackData();
       }
     });
   }
@@ -72,111 +86,47 @@ export class PageDashboardJustificationComponent implements OnInit {
   /**
    * Mappe les données DTO vers l'interface JustificationData
    */
-  private mapDtoToJustificationData(dtos: JustificationDashboardDto[]): JustificationData[] {
-     if (!Array.isArray(dtos)) {
-    console.error('❌ Données invalides dans mapDtoToJustificationData:', dtos);
-    return [];
-  }
+  private mapDtoToJustificationData(dtos: any[]): JustificationData[] {
+    console.log('Mapping des DTOs:', dtos);
     return dtos.map(dto => ({
-      id: parseInt(dto.id.toString()) || 0,
+      id: dto.id?.toString() || '',
       images: dto.images || '',
+      image: dto.image || [],
       nomEtudiant: dto.nomEtudiant || '',
       matricule: dto.matricule || '',
       nomClasse: dto.nomClasse || '',
-      date: dto.date?.toString() || '',
+      date: dto.date || '',
       nomModule: dto.nomModule || '',
-      enumJustification: this.mapStatus(dto.enumJustification || ''),
+      enumJustification: this.mapStatus(dto.statutJustification),
       motif: dto.motif || '',
-      pieceJointeUrl: dto.pieceJointeUrl || ''
+      pieceJointe: dto.pieceJointe || ''
     }));
   }
 
   /**
-   * Mappe le statut du DTO vers le type JustificationStatus
+   * Méthode pour rafraîchir les données
    */
+  refreshData(): void {
+    this.loadJustifications();
+  }
+
   private mapStatus(status: string): JustificationStatus {
     switch (status?.toUpperCase()) {
+      case 'VALIDER':
+        return 'Valider';
+      case 'REJETER':
+        return 'Rejeter';
+      case 'ENCOURS':
       case 'EN_ATTENTE':
-        return 'En-attente';
-      case 'VALIDEE':
-      case 'VALIDE':
-        return 'Validee';
-      case 'REFUSEE':
-      case 'REFUSE':
-        return 'Refusee';
+        return 'EnCours';
       default:
-        return 'En-attente';
+        return 'EnCours';
     }
   }
 
-  /**
-   * Données de fallback en cas d'erreur de chargement
-   */
-  private loadFallbackData(): void {
-    this.allJustifications = [
-      {
-        id: 1,
-        images: '',
-        nomEtudiant: 'Exauce Amour',
-        matricule: 'E123',
-        nomClasse: 'L3 GLRS',
-        date: '2023-10-26',
-        nomModule: 'Angular',
-        enumJustification: 'En-attente',
-        motif: 'Cause maladie',
-        pieceJointeUrl: ''
-      },
-      {
-        id: 2,
-        images: '',
-        nomEtudiant: 'Poathy Patrick',
-        matricule: 'E456',
-        nomClasse: 'L3 GLRS',
-        date: '2023-10-25',
-        nomModule: 'Java',
-        enumJustification: 'Validee',
-        motif: 'Rendez-vous',
-        pieceJointeUrl: ''
-      },
-      {
-        id: 3,
-        images: '',
-        nomEtudiant: 'Mame Diarra Fall',
-        matricule: 'E789',
-        nomClasse: 'L3 GLRS',
-        date: '2023-10-26',
-        nomModule: 'PHP',
-        enumJustification: 'Validee',
-        motif: 'Urgence familiale',
-        pieceJointeUrl: ''
-      },
-      {
-        id: 4,
-        images: '',
-        nomEtudiant: 'Salimatou',
-        matricule: 'E987',
-        nomClasse: 'L3 CDSD',
-        date: '2023-10-24',
-        nomModule: 'Python',
-        enumJustification: 'En-attente',
-        motif: 'Problème de transport',
-        pieceJointeUrl: ''
-      },
-      {
-        id: 5,
-        images: '',
-        nomEtudiant: 'Sydney ITIERE',
-        matricule: 'E987',
-        nomClasse: 'L3 IAGE',
-        date: '2023-10-24',
-        nomModule: 'Python',
-        enumJustification: 'Refusee',
-        motif: 'En retard',
-        pieceJointeUrl: ''
-      }
-    ];
-    this.applyFilter();
-  }
+  goToAbsences(): void {
+  this.router.navigate(['/dashboard/absences']);
+}
 
   applyFilter(): void {
     let filtered = this.allJustifications.filter(justification =>
@@ -190,23 +140,11 @@ export class PageDashboardJustificationComponent implements OnInit {
     }
 
     if (this.selectedStatus) {
-      const statusToFilter = this.mapStatus(this.selectedStatus);
       filtered = filtered.filter(justification => {
-        return justification.enumJustification === statusToFilter;
+        return justification.enumJustification === this.selectedStatus;
       });
     }
 
     this.filteredJustifications = filtered;
-  }
-
-  goToAbsences(): void {
-  this.router.navigate(['/dashboard/absences']);
-}
-
-  /**
-   * Méthode pour rafraîchir les données
-   */
-  refreshData(): void {
-    this.loadJustifications();
   }
 }

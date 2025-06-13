@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, Input, OnInit } from '@angular/core';
 import { AbsenceService } from '../../../shared/services/impl/absence.service';
 import { AbsenceDashboardDto } from '../../../shared/models/dto/Request/absenceDashboardDto';
 import { AbsenceFilterDto } from '../../../shared/models/dto/Request/absenceFilterDto';
@@ -9,6 +9,7 @@ import { InfoUserCardComponent } from "../components/info-user-card/info-user-ca
 import { response } from 'express';
 import { AuthentificationService } from '../../../shared/services/impl/authentification-mock.service';
 import { Utilisateur } from '../../../shared/models/utilisateur.model';
+import { Absence } from '../../../shared/models/Absence.model';
 
 
 @Component({
@@ -23,9 +24,20 @@ export class PageDashboardAbsenceComponent implements OnInit {
   allAbsences: AbsenceDashboardDto[] = [];
   private authService = inject(AuthentificationService);
   userInfo: Utilisateur | null = null;
+  @Input() absenceData:AbsenceDashboardDto ={
+     id: 1,
+    image: '',
+    nomEtudiant: 'Henry',
+    matricule: 'ISM20022',
+    nomClasse: 'L3GLRS',
+    date: new Date('2025-06-13'),
+    nomModule: '',
+    etatAbsence: 'NON-JUSTIFIE',
+    justificationId: 86548,
+
+  }
 
   absenceFilter: AbsenceFilterDto = {
-    batiment: null as any,
     date: null as any,
     etatAbsence: null as any
   };
@@ -38,6 +50,7 @@ export class PageDashboardAbsenceComponent implements OnInit {
     next: (response: any) => {
       console.log('Réponse reçue :', response);
       this.absences = Array.isArray(response) ? response : response.content || [];
+      this.allAbsences = this.absences;
     },
     error: (err) => {
       console.error('Erreur :', err);
@@ -57,7 +70,6 @@ export class PageDashboardAbsenceComponent implements OnInit {
     applyFilter(): void {
   console.log('Filtrage en cours avec :', this.absenceFilter);
   this.absences = this.allAbsences.filter(abs =>
-    (!this.absenceFilter.batiment || abs.batiment === this.absenceFilter.batiment) &&
     (!this.absenceFilter.etatAbsence || abs.etatAbsence === this.absenceFilter.etatAbsence) &&
     (!this.absenceFilter.date || this.sameDate(abs.date, this.absenceFilter.date))
   );
@@ -65,7 +77,6 @@ export class PageDashboardAbsenceComponent implements OnInit {
 
   resetFilter(): void {
     this.absenceFilter = {
-      batiment: null as any,
       date: null as any,
       etatAbsence: null as any
     };
@@ -91,8 +102,12 @@ export class PageDashboardAbsenceComponent implements OnInit {
   }
 
   
-goToValidation(justificationId: number): void {
-  this.router.navigate(['/dashboard/validation', justificationId]);
+goToValidation(absence : AbsenceDashboardDto): void {
+  this.router.navigate(['/dashboard/detail-absence'],
+    {
+        state:{absence}
+    }
+  );
 }
 
 getInitials(nom: string): string {

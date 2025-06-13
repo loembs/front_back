@@ -20,14 +20,14 @@
       </div>
 <!-- Barre de filtre avec actions -->
 <div class="flex gap-4 items-center p-4 bg-gray-100 my-6 rounded-lg">
-  <select [(ngModel)]="absenceFilter.batiment"
+ <!--  <select [(ngModel)]="absenceFilter.batiment"
     class="px-3 py-2 rounded-md border border-gray-300 text-sm">
     <option value="">Tous les bâtiments</option>
     <option value="Ingenieur">Ingénieur</option>
     <option value="Management">Management</option>
     <option value="Madiba">Madiba</option>
     <option value="Droit">Droit</option>
-  </select>
+  </select>   -->
 
   <input type="date" [(ngModel)]="absenceFilter.date"
     class="px-3 py-2 rounded-md border border-gray-300 text-sm" />
@@ -35,8 +35,8 @@
   <select [(ngModel)]="absenceFilter.etatAbsence"
     class="px-3 py-2 rounded-md border border-gray-300 text-sm">
     <option value="">Tous les statuts</option>
-    <option value="Justifie">Justifié</option>
-    <option value="Non-justifie">Non-justifié</option>
+    <option value="JUSTIFIE">Justifié</option>
+    <option value="NON-JUSTIFIE">Non-justifié</option>
 
   </select>
 
@@ -63,8 +63,8 @@
       <!-- Infos étudiant -->
       <div class="flex items-center space-x-4 mb-2 md:mb-0">
         <div class="w-4 h-4 bg-orange-600 rounded-full flex items-center justify-center">
-          <img *ngIf="absence.images" [src]="absence.images" alt="photo" class="w-full h-full rounded-full object-cover">
-          <span *ngIf="!absence.images" class="text-white font-bold">{{ getInitials(absence.nomEtudiant) }}</span>
+          <img *ngIf="absence.image" [src]="absence.image" alt="photo" class="w-full h-full rounded-full object-cover">
+          <span *ngIf="!absence.image" class="text-white font-bold">{{ getInitials(absence.nomEtudiant) }}</span>
         </div>
         <div class="font-medium">{{ absence.nomEtudiant }}</div>
       </div>
@@ -106,14 +106,12 @@
              }">
           
         </div>
-
-        <!-- Bouton Voir 
         <div>
-          <button *ngIf="absence.etatAbsence === 'En_attente'"
+          <button *ngIf="absence.etatAbsence === 'NON-JUSTIFIE'"
                   class="bg-blue-600 px-3 py-1 rounded text-xs font-medium hover:bg-gray-200 hover:text-black transition"
-                  (click)="goToValidation(absence.id)">
+                  (click)="goToValidation(absence)">
             VOIR
-          </button>  -->
+          </button>  
   
       </div>
     </div>
